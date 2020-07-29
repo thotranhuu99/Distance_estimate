@@ -8,7 +8,7 @@ def calculate_distance(object_width, focal_length, width_pixel):
     return distance
 
 
-def distance_estimate(img, start_point, end_point, extended_ratio, canny_var_1, canny_var_2):
+def distance_estimate(img, start_point, end_point, extended_ratio, canny_var_1, canny_var_2, object_width):
     kernel = np.ones((5, 5), np.uint8)  # Init kernel for erosion operation
     width_box = end_point[1] - start_point[1]   # Calculate width of bounding box
     height_box = end_point[0] - start_point[0]  # Calculate height of bounding box
@@ -32,7 +32,7 @@ def distance_estimate(img, start_point, end_point, extended_ratio, canny_var_1, 
         ext_right = max(cc[:, :, 0].max(), ext_right)
         ext_top = min(cc[:, :, 1].min(), ext_top)
         ext_bot = max(cc[:, :, 1].max(), ext_bot)
-    distance = calculate_distance(7, 764, ext_right - ext_left)     # Calculate distance
+    distance = calculate_distance(object_width, 764, ext_right - ext_left)     # Calculate distance
     # Draw contour for further troubleshooting
     img_1 = cv2.drawContours(crop_img.copy(), contours, -1, (0, 0, 255), 3)
     # Draw rectangle used for distance estimation
