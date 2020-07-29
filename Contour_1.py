@@ -30,7 +30,7 @@ extended_ratio = 0.1
 
 kernel = np.ones((5, 5), np.uint8)
 
-image_name = '0_ball_1256'
+image_name = '2_clamp_1177'
 my_path = os.path.abspath(os.path.dirname(__file__))
 image_file = os.path.join(my_path, "Real_data", "") + image_name + '.jpg'
 bounding_box_file = os.path.join(my_path, "Real_data", "") + image_name + '.txt'
