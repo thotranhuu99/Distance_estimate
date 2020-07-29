@@ -46,8 +46,8 @@ y_axis_extended = [max(0, int(start_point[0] - extended_ratio * height_box)),
                    min(img.shape[1], int(end_point[0] + extended_ratio * height_box))]
 cv2.namedWindow('Window 1')
 cv2.namedWindow('Window 2')
-cv2.createTrackbar('Var_1', 'Window 1', 462, 1000, nothing)
-cv2.createTrackbar('Var_2', 'Window 1', 974, 1000, nothing)
+cv2.createTrackbar('Var_1', 'Window 1', 100, 1000, nothing)
+cv2.createTrackbar('Var_2', 'Window 1', 200, 1000, nothing)
 while (1):
     img = cv2.imread(image_file, 0)
     crop_img = img[x_axis_extended[0]: x_axis_extended[1], y_axis_extended[0]:y_axis_extended[1]]
@@ -71,7 +71,7 @@ while (1):
     cv2.rectangle(crop_img, (extLeft, extTop), (extRight, extBot), (0, 255, 0))
     img_1 = cv2.drawContours(crop_img.copy(), contours, -1, (0, 255, 0), 3)
     distance = calculate_distance(7, 764, extRight - extLeft)
-    print(distance)
+    print("{} {} ".format(start_point, end_point))
     k = cv2.waitKey(100) & 0xFF
     if k == 27:
         break
