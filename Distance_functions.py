@@ -12,6 +12,8 @@ def distance_estimate(img, start_point, end_point, extended_ratio, canny_var_1, 
     kernel = np.ones((5, 5), np.uint8)  # Init kernel for erosion operation
     width_box = end_point[1] - start_point[1]   # Calculate width of bounding box
     height_box = end_point[0] - start_point[0]  # Calculate height of bounding box
+    if width_box == 0 or height_box == 0:
+        return [-1, img, 1]
     # Calculate x axis extended
     x_axis_extended = [max(0, int(start_point[1] - extended_ratio * width_box)),
                        min(img.shape[0], int(end_point[1] + extended_ratio * width_box))]
@@ -44,7 +46,7 @@ def distance_estimate(img, start_point, end_point, extended_ratio, canny_var_1, 
         except Exception:
             error = 1
     else:
-        return [0, crop_img, 0]
+        return [-1, crop_img, 1]
     return [distance, img_1, error]
 
 
