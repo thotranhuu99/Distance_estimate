@@ -37,6 +37,8 @@ def distance_estimate(img, start_point, end_point, extended_ratio, canny_var_1, 
             ext_top = min(cc[:, :, 1].min(), ext_top)
             ext_bot = max(cc[:, :, 1].max(), ext_bot)
         try:
+            if ext_right - ext_left == 0:
+                return [-1, img, 1]
             distance = calculate_distance(object_width, 764, ext_right - ext_left)     # Calculate distance
             # Draw contour for further troubleshooting
             img_1 = cv2.drawContours(crop_img.copy(), contours, -1, (0, 0, 255), 3)
@@ -92,5 +94,5 @@ def distance_estimate_developing(img, start_point, end_point, extended_ratio, ca
             cv2.rectangle(img_1, (x, y), (x + w, y + h), (0, 255, 0), 2)
         else:
             cv2.drawContours(img_1, contours, -1, (0, 0, 255), 3)
-    distance = 1;
+    distance = 1
     return [distance, img_1]
