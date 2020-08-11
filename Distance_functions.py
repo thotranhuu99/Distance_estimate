@@ -23,7 +23,7 @@ def distance_estimate(img, start_point, end_point, extended_ratio, canny_var_1, 
     # Crop image
     crop_img = img[x_axis_extended[0]: x_axis_extended[1], y_axis_extended[0]:y_axis_extended[1]]
     erode = cv2.erode(crop_img, kernel, iterations=1)   # Perform erosion operation on input image
-    dilate = cv2.dilate(erode.copy(), kernel, iterations=1) # Perform dilation operation on input image
+    dilate = cv2.dilate(erode.copy(), kernel, iterations=1)  # Perform dilation operation on input image
     edges = cv2.Canny(dilate, canny_var_1, canny_var_2)  # Perform Canny edge detection algorithm on eroded image
     contours = cv2.findContours(edges.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)   # Find contours of the image
     contours = imutils.grab_contours(contours)  # Grabs the appropriate tuple value
@@ -41,13 +41,14 @@ def distance_estimate(img, start_point, end_point, extended_ratio, canny_var_1, 
             # Draw contour for further troubleshooting
             img_1 = cv2.drawContours(crop_img.copy(), contours, -1, (0, 0, 255), 3)
             # Draw rectangle used for distance estimation
-            cv2.rectangle(img_1, (ext_left, ext_top), (ext_right, ext_bot), (0, 255, 0), 3)
+            img_out = img_1.copy()
+            cv2.rectangle(img_out, (ext_left, ext_top), (ext_right, ext_bot), (0, 255, 0), 3)
             error = 0
         except Exception:
             error = 1
     else:
         return [-1, crop_img, 1]
-    return [distance, img_1, error]
+    return [distance, img_out, error]
 
 
 def distance_estimate_developing(img, start_point, end_point, extended_ratio, canny_var_1, canny_var_2):
@@ -92,5 +93,5 @@ def distance_estimate_developing(img, start_point, end_point, extended_ratio, ca
             cv2.rectangle(img_1, (x, y), (x + w, y + h), (0, 255, 0), 2)
         else:
             cv2.drawContours(img_1, contours, -1, (0, 0, 255), 3)
-    distance = 1;
+    distance = 1
     return [distance, img_1]
